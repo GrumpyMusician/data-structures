@@ -12,19 +12,22 @@ public class ListUtil{
     */
     public static void reverse(LinkedList<String> strings)
     {
-        int total = 0;
-        String elemshift;
-        
+        LinkedList<String> backwardList = new LinkedList<>();
         ListIterator<String> iterator = strings.listIterator();
 
-        while (iterator.hasNext())
-            total ++; // Finds the length of the list, puts the iterator at the back of the list.
-        
-        for (int i = 0; i <= total; i++){
-            iterator.previous();
-            elemshift = iterator.next();
-            iterator.remove();
-            strings.addFirst(elemshift);
+        while (iterator.hasNext()) { // Put all the elements of strings into backwardList in reverse order
+            String element = iterator.next();
+            backwardList.addFirst(element);
         }
+
+        while (strings.size() > 0) { // Get rid of all elements of strings to replace it with elements from backwardList
+            strings.removeFirst();
+        }
+
+        for (int i = 0; i < backwardList.size(); i++) { // Putting all the backwardList elements into strings
+            String element = backwardList.get(i);
+            strings.add(element);
+        }
+        
     }
 }
