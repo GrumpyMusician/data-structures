@@ -16,7 +16,6 @@ public class SudokuSolver {
         try (Scanner in = new Scanner(new File(fileName))) {
 
             this.grid = new int[N][N];
-
             for (int row = 0; row < N; row++) {
                 String line = in.next();
 
@@ -29,15 +28,21 @@ public class SudokuSolver {
                         number = Integer.parseInt(strVal);
                     }
                     this.grid[row][col] = number;
+                    
                 }
             }
         } catch (FileNotFoundException e) {
             System.out.println("Cannot open: " + fileName);
         }
 
-        // create the list of sets for each row (this.rows)
-        // ...
 
+        // create the list of sets for each row (this.rows)
+        ArrayList<Set<Integer>> rows = new ArrayList<Set<Integer>>();
+        Set<Integer> raws = new HashSet<>();
+        for (int row=0;row<9;row++)
+        {
+            
+        }
         // create the list of sets for each col (this.cols)
         // ...
 
@@ -64,7 +69,6 @@ public class SudokuSolver {
         }
         System.out.println(this.nums);
     }
-
     public boolean solve() {
         // find an empty location, if any
         boolean finished = true;
@@ -141,7 +145,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "src/puzzle1.txt";
+        String fileName = "Chapter 15 Activities\\Sudoku\\src\\puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
