@@ -2,6 +2,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * TL; DR:
+ * 
+ * Write a program that solves Sudoku puzzles using sets and operations on sets. The general algorithm should be a traditional 
+ * backtracking algorithm. In a backtracking algorithm, a potential solution is explored recursively until it fails. When that
+ * happens, the most recent move is undone and an alternative move is explored.
+ * 
+ */
+
 public class SudokuSolver {
     private final int M = 3;
     private final int N = M * M;
@@ -16,6 +25,7 @@ public class SudokuSolver {
         try (Scanner in = new Scanner(new File(fileName))) {
 
             this.grid = new int[N][N];
+
             for (int row = 0; row < N; row++) {
                 String line = in.next();
 
@@ -28,7 +38,6 @@ public class SudokuSolver {
                         number = Integer.parseInt(strVal);
                     }
                     this.grid[row][col] = number;
-                    
                 }
             }
         } catch (FileNotFoundException e) {
@@ -37,14 +46,48 @@ public class SudokuSolver {
 
 
         // create the list of sets for each row (this.rows)
-        ArrayList<Set<Integer>> rows = new ArrayList<Set<Integer>>();
-        Set<Integer> raws = new HashSet<>();
-        for (int row=0;row<9;row++)
-        {
-            
+        ArrayList<Set<Integer>> rows = new ArrayList<>(N);
+        for (int i = 0; i < N; i++) {
+            Set<Integer> set = new HashSet<>();
+            for (int j = 0; j < N; j++){
+                set.add(j);
+            }
+            Set<Integer> remove = new HashSet<>();
+            for (int j = 0; j < N; j++) {
+                int gridValue = this.grid[i][j];
+                for (int k = 1; k <= N; k++) {
+                    if (k == gridValue) 
+                        remove.add(k);
+                }
+            }
+            set.removeAll(remove);
+            rows.add(set);
         }
+        this.rows = rows;
+
+
+
         // create the list of sets for each col (this.cols)
-        // ...
+        ArrayList<Set<Integer>> cols = new ArrayList<>(N);
+        for (int i = 0; i < N; i++) {
+            Set<Integer> set = new HashSet<>();
+            for (int j = 0; j < N; j++){
+                set.add(j);
+            }
+            Set<Integer> remove = new HashSet<>();
+            for (int j = 0; j < N; j++) {
+                int gridValue = this.grid[j][i];
+                for (int k = 1; k <= 3; k++) {
+                    if (k == gridValue) 
+                        remove.add(k);
+                }
+            }
+
+            set.removeAll(remove);
+            cols.add(set);
+        }
+        this.cols = cols;
+
 
         // create the list of sets for each square (this.squares)
         /* the squares are added to the list row-by-row:
@@ -52,10 +95,35 @@ public class SudokuSolver {
             3 4 5
             6 7 8
          */
-        // ...
+        ArrayList<Set<Integer>> sqrs = new ArrayList<>();
+        for (int i = 0; i < 9; i++){
+            Set<Integer> set = new HashSet<>();
+            for (int j = 0; j < N; j++){
+                set.add(j);
+            }
+            Set<Integer> remove = new HashSet<>();
+            for (int j = 0; j < N%3; j++) {
+                int gridValue = this.grid[i%3][j%3];
+                for (int k = 1; k <= N; k++) {
+                    if (k == gridValue) 
+                        remove.add(k);
+                }
+            }
+            set.removeAll(remove);
+            sqrs.add(set);
+        }
 
-        // create a hash set for [1..9] (this.nums)
-        // ...
+        this.squares = sqrs;
+
+
+        // create a hash set for [1...9] (this.nums)
+        Set<Integer> nums = new HashSet();
+        for (int i = 1; i <= 9; i++){
+            nums.add(i);
+        }
+        
+        this.nums = nums;
+
 
         // visually inspect that all the sets are correct
         for (int row = 0; row < N; row++) {
@@ -69,6 +137,7 @@ public class SudokuSolver {
         }
         System.out.println(this.nums);
     }
+
     public boolean solve() {
         // find an empty location, if any
         boolean finished = true;
@@ -100,9 +169,13 @@ public class SudokuSolver {
          */
         Set<Integer> possibleNums = new HashSet<Integer>();
         possibleNums.addAll(this.nums);
-        
-        // ...
 
+        int nextGrid = (int) Math.floor(nextRow/3 + nextCol/3);
+
+        possibleNums.removeAll(this.rows.get(nextRow));
+        possibleNums.removeAll(this.cols.get(nextCol));
+        possibleNums.removeAll(this.squares.get(nextGrid));
+        
         // if there are no possible numbers, we cannot solve the board in its current state
         if (possibleNums.isEmpty()) {
             return false;
@@ -111,19 +184,17 @@ public class SudokuSolver {
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
-            // ...
+            this.grid[nextRow][nextCol] = possibleNum;
+            this.rows.get(nextRow).remove(possibleNum);
+            this.cols.get(nextCol).remove(possibleNum);
+            this.squares.get(nextGrid).remove(possibleNum);
 
             // recursively solve the board
             if (this.solve()) {
                 // the board is solved!
                 return true;
             } else {
-                /*
-                 Undo the move before trying another possible number by setting the corresponding
-                 element in the grid back to 0 and removing possibleNum from all three corresponding
-                 sets.
-                 */
-                // ...
+                System.out.println("elrip_");
             }
         }
 
