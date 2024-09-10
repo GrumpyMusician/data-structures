@@ -23,7 +23,7 @@ public class Sieve
 
         for (int i = 2; i <= n; i++){
             for (int j = 2; j <= n; j++){
-                allnums.remove(i*j); // I'm suprised this part worked first try :p
+                allnums.remove(i*j); // I'm surprised this part worked first try :p
             }
                 
         }
