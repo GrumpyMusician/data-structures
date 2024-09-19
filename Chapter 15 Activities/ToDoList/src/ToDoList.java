@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 /**
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class ToDoList
 {
     // Instance variable(s)
-    . . .
+    PriorityQueue<Task> list = new PriorityQueue<>();
 
     /**
      * Constructor
@@ -20,7 +21,7 @@ public class ToDoList
     public ToDoList()
     {
         // Complete this
-        . . .
+        //PriorityQueue<Integer> list = new PriorityQueue<Integer>();
     }
 
     /**
@@ -60,9 +61,14 @@ public class ToDoList
     public void addTask(String optionStr)
     {
         // Complete this method
-        . . .
-            
-            
+        String[] arrayValues = optionStr.split(" ");
+
+        int priorityTask = Integer.parseInt(arrayValues[1]);
+        String[] rawTasks = Arrays.copyOfRange(arrayValues, 2, arrayValues.length);
+        String task = String.join(" ", rawTasks);
+
+        if ()
+            list.add(new Task(priorityTask, task));
     }
 
     /**
@@ -74,7 +80,8 @@ public class ToDoList
         Task next = null;
         
         // Complete this method
-        . . .
+        list.remove();
+
         
         
         if (next == null)
