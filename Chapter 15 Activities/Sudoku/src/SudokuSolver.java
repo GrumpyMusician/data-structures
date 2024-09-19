@@ -84,24 +84,26 @@ public class SudokuSolver {
             3 4 5
             6 7 8
          */
+
+        int startRow = 0;
+        int startCol = 0;
         ArrayList<Set<Integer>> sqrs = new ArrayList<>();
-        for (int i = 0; i < 3; i++){
+        for (int square = 0; square < N; square++){
             Set<Integer> set = new HashSet<>();
-            for (int j = 0; j < N/3; j++) {
-                if (grid[i][j]!=0){
-                    set.add(grid[i][j]);
-                    System.out.println(grid[i][j] + "a");
-                }
-            }
-            for (int j = 0; j < N/3; j++) {
-                if (grid[j][i]!=0){
-                    set.add(grid[j][i]);
-                    System.out.println(grid[j][i]);
+            for (int row = startRow; row < startRow + M; row++){
+                for (int col = startCol; col < startCol + M; col ++){
+                    if(this.grid[row][col] != 0){
+                        set.add(this.grid[row][col]);
+                    }
                 }
             }
             sqrs.add(set);
+            startCol += M;
+            if (startCol == N) {
+                startCol = 0;
+                startRow += M;
+            }
         }
-
 
         // create a hash set for [1...9] (this.nums)
         Set<Integer> nums = new HashSet();

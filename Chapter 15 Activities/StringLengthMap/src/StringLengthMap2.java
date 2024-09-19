@@ -12,26 +12,28 @@ public class StringLengthMap2
 {
     public static void main(String[] args)
     {
-        String filename = "src/test1.txt";
+        String filename = "C:\\Users\\thegr\\OneDrive\\Documents\\GitHub\\data-structures\\Chapter 15 Activities\\StringLengthMap\\src\\test1.txt";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
 
-            // Create your map here
+            Map<Integer, HashSet<String>> lengths = new HashMap<>();
             
 
             while (in.hasNext())
             {
                 String word = clean(in.next());
-                Integer len = word.length();
+                Integer c = word.length();
 
                 // Update the map here
                 // Use the Java 8 merge() method
-                
-
-
+                lengths.merge(c, new HashSet<>(Arrays.asList(word)), (oldValue, notPresentValue) -> {oldValue.addAll(notPresentValue); return oldValue; });
             }
 
+            Set<Integer> keys = lengths.keySet();
+            for (Integer key : keys) {
+                System.out.println(key + ": " + lengths.get(key));
+            }
             // Print the strings, in increasing order of their length
             // Use this format: 1: i, a, i
         } catch (FileNotFoundException e)

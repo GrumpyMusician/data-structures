@@ -18,7 +18,7 @@ public class FirstLetterMap
         {
 
             // Create your map here
-            ...
+            Map<String, Set<String>> firstletters = new HashMap<>();
 
             while (in.hasNext())
             {
@@ -27,14 +27,17 @@ public class FirstLetterMap
 
                 // Update the map here
                 // Modify Worked Example 15.1
-                . . .
-
-
+                Set<String> words = firstletters.get(word);
+                firstletters.put(word, words);
             }
 
             // Print the map here in this form
             // a: [a, able, aardvark]
-            . . .
+            Set<String> keys = firstletters.keySet();
+            for (String key : keys) {
+                System.out.println(key + ": " + firstletters.get(key));
+            }
+
         } catch (FileNotFoundException e)
         {
             System.out.println("Cannot open: " + filename);
