@@ -1,4 +1,4 @@
-public class FloodFillTester
+public class FloodFillTesterA
 {
     public static void main(String[] args)
     {
