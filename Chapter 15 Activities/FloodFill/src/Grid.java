@@ -18,6 +18,7 @@ public class Grid
             pixels[col][row] = -1;
 
             if (row > 0 && pixels[col][row-1] == 0){
+                
                 row--;
             }
             else if (col < SIZE - 1 && pixels[col+1][row] == 0){

@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 /**
  * Read all words from a file and add them to a map
  * whose keys are the first letters of the words and
@@ -7,54 +8,43 @@ import java.io.*;
  * that same letter. Then print out the word sets in
  * alphabetical order. Update the map by modifying
  * Worked Example 15.1.
-*/
-public class FirstLetterMap
-{
-    public static void main(String[] args)
-    {
+ */
+public class FirstLetterMap {
+    public static void main(String[] args) {
         String filename = "C:\\Users\\thegr\\OneDrive\\Documents\\GitHub\\data-structures\\Chapter 15 Activities\\FirstLetterMap\\FirstLetterMap2\\src\\test1.txt";
 
-        try (Scanner in = new Scanner(new File(filename)))
-        {
-
+        try (Scanner in = new Scanner(new File(filename))) {
             // Create your map here
-            Map<String, Set<String>> firstletters = new HashMap<>();
+            Map<Character, Set<String>> letterMap = new TreeMap<>();
 
-            while (in.hasNext())
-            {
+            while (in.hasNext()) {
                 String word = clean(in.next());
+                if (word.isEmpty()) continue;
                 Character c = word.charAt(0);
 
                 // Update the map here
-                // Modify Worked Example 15.1
-                Set<String> words = firstletters.get(word);
-                firstletters.put(word, words);
+                letterMap.putIfAbsent(c, new TreeSet<>());
+                letterMap.get(c).add(word);
             }
 
             // Print the map here in this form
             // a: [a, able, aardvark]
-            Set<String> keys = firstletters.keySet();
-            for (String key : keys) {
-                System.out.println(key + ": " + firstletters.get(key));
+            for (Map.Entry<Character, Set<String>> entry : letterMap.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
             }
-
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             System.out.println("Cannot open: " + filename);
         }
     }
 
-    public static String clean(String s)
-    {
-        String r = "";
-        for (int i = 0; i < s.length(); i++)
-        {
+    public static String clean(String s) {
+        StringBuilder r = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (Character.isLetter(c))
-            {
-                r = r + c;
+            if (Character.isLetter(c)) {
+                r.append(c);
             }
         }
-        return r.toLowerCase();
+        return r.toString().toLowerCase();
     }
 }
