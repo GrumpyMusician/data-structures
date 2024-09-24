@@ -24,8 +24,6 @@ public class Driveway
         // Complete the constructor
         driveway = new Stack<>();
         street = new Stack<>();
-
-
     }
 
     /**
@@ -37,6 +35,7 @@ public class Driveway
     {
         // Complete this method
         driveway.push(licensePlate);
+        printDriveway();
     }
 
     /**
@@ -53,6 +52,7 @@ public class Driveway
 
       while (!carFound){
         carshunt = driveway.pop();
+        printDriveway();
 
         if (carshunt == licensePlate)
           carFound = true;
@@ -88,4 +88,13 @@ public class Driveway
           System.out.println(street.elementAt(i));
 
     }
+
+    public void printDriveway(){
+      System.out.print("Cars in Driveway: ");
+      for (Integer cars: driveway){
+        System.out.print(cars + " ");
+      }
+      System.out.print("\nInput: ");
+    }
+
 }
