@@ -67,7 +67,7 @@ public class ToDoList
         String[] rawTasks = Arrays.copyOfRange(arrayValues, 2, arrayValues.length);
         String task = String.join(" ", rawTasks);
 
-        if ()
+        
             list.add(new Task(priorityTask, task));
     }
 
