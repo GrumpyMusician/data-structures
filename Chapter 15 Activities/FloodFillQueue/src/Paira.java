@@ -1,4 +1,4 @@
-public class Pair
+public class Paira
 {
     private final int row;
     private final int col;
