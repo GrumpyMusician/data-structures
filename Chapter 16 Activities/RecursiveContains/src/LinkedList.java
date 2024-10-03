@@ -41,30 +41,27 @@ public class LinkedList
     */
     public boolean contains(Object obj)
     {
-        for (int i = 0; i < size(); i++){
-            if (obj.equals(get(i)))
-                return true;
-        }  
-        return false;
+        boolean result = contains(obj, 0);
+        return result;
     }
 
     public boolean contains(Object obj, int nodeNum){
         if (obj.equals(get(nodeNum)))
             return true;
-        if (nodeNum < size())
+        if (nodeNum == size())
             return false;
         return contains(obj, nodeNum + 1);
     }
 
-    /**
-        Checks if the given node or any in its following nodes contains the given object.
-        @param obj The object to be checked for.
-        @return If the object exists in the node or its following nodes.
-    */
-    public static boolean contains(Node start, Object obj)
-    {
-        // ...
-    }
+    // /**
+    //     Checks if the given node or any in its following nodes contains the given object.
+    //     @param obj The object to be checked for.
+    //     @return If the object exists in the node or its following nodes.
+    // */
+    // public static boolean contains(Node start, Object obj)
+    // {
+    //     // ...
+    // }
 
     /**
         Returns the first element in the linked list.

@@ -26,25 +26,18 @@ public class LinkedList
     */
     public int size()
     {
-        int length = 0;
-        
         LinkedListIterator iterator = new LinkedListIterator();
 
-        while(iterator.hasNext()){
-            iterator.next();
-            length ++;
-        }
+        int length = size(iterator, 0);
 
         return length;
     }
 
     public int size(LinkedListIterator iterator, int length){
-
         if (iterator.hasNext()){
             iterator.next();
-            size(iterator, length + 1);
+            length = size(iterator, length + 1);
         }
-
         return length;
     }
 
