@@ -23,17 +23,17 @@ public class LinkedListQueue
     public void lastToFirst()
     {
         Node current = head;
+        Node last = tail;
+
         while(current.next != tail)
         {
-            current = current.next;
+            current = current.next; // Current gets moved to the second to last position of the queue.
         }
-        /* 
-        Node shift = tail;
-        tail = head;
-        tail.next = head;
-        head = head.next;
-        head = shift;
-        */
+
+        tail = current;
+        last.next = head;
+        head = last;
+        
     }
 
     /**
