@@ -85,23 +85,24 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code)
     {
+        TreeNode currentNode = decodeTree;
         for (int i = 0; i < code.length(); i++){
             if (code.charAt(i) == DOT){
-                if (decodeTree.getLeft() == null)
-                    decodeTree.setLeft(new TreeNode(null));
+                System.out.print("Left ");
+                if (currentNode.getLeft() == null)
+                    currentNode.setLeft(new TreeNode(null));
+                currentNode = currentNode.getLeft();
             }
             else if (code.charAt(i) == DASH){
-                if (decodeTree.getRight() == null)
-                    decodeTree.setRight(new TreeNode(null));
+                System.out.print("Right ");
+                if (currentNode.getRight() == null)
+                    currentNode.setRight(new TreeNode(null));
+                currentNode = currentNode.getRight();
             }
-            else
-                throw new NoSuchElementException();
         }
 
-        decodeTree.setValue(letter);
-
-        System.out.println(decodeTree.getValue());
-        System.out.println(decodeTree.getLeft().getValue() + ", " + decodeTree.getRight().getValue());
+        currentNode.setValue(letter);
+        System.out.println("--> " + letter);
 
     }
 
@@ -114,11 +115,6 @@ public class MorseCode
     public static String encode(String text)
     {
         StringBuffer morse = new StringBuffer(400);
-
-        /*
-            !!! INSERT CODE HERE
-        */
-
         return morse.toString();
     }
 
