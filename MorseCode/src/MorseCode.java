@@ -115,7 +115,49 @@ public class MorseCode
     public static String encode(String text)
     {
         StringBuffer morse = new StringBuffer(400);
+
+        String marconimsg = "";
+        for (int i = 0; i < text.length(); i++){
+            if (text.charAt(i) != ' '){
+                char marconichar = text.charAt(i);
+                marconimsg += findpath(decodeTree.getLeft(), marconichar, ".");
+                marconimsg += findpath(decodeTree.getRight(), marconichar, "-");
+
+                System.out.println(marconimsg);
+            }
+            else {
+                morse.append(marconimsg + " ");
+                marconimsg = "";
+            }
+        }
+
+        morse.append(marconimsg);
+
+        System.out.println(morse.toString());
         return morse.toString();
+    }
+
+    public static String findpath(TreeNode node, char findchar, String path){
+
+        TreeNode leftNode = node.getLeft();
+        TreeNode rightNode = node.getRight();
+
+        findchar = Character.toUpperCase(findchar);
+
+        System.out.println(findchar + ", " + node.getValue() + ": " + path);
+
+        String message = "";
+
+        if (node.getValue() != null && node.getValue().equals((Object) findchar))
+            return path + " ";
+
+        if (leftNode != null)
+            message += findpath(leftNode, findchar, path + ".");
+
+        if (rightNode != null)
+            message +=  findpath(rightNode, findchar, path + "-");
+        
+        return message;
     }
 
     /**
@@ -127,11 +169,24 @@ public class MorseCode
     public static String decode(String morse)
     {
         StringBuffer text = new StringBuffer(100);
-
-        /*
-            !!! INSERT CODE HERE
-        */
-
+        String[] letters = morse.split(" ");
+        
+        for (String letter : letters) {
+            TreeNode currentNode = decodeTree;
+            for (int j = 0; j < letter.length(); j++) {
+                if (letter.charAt(j) == DOT)
+                    currentNode = currentNode.getLeft();
+                else if (letter.charAt(j) == DASH)
+                    currentNode = currentNode.getRight();
+            }
+            
+            if (currentNode != null && currentNode.getValue() != null) {
+                text.append(currentNode.getValue());
+            } else {
+                text.append(" ");
+            }
+        }
+        
         return text.toString();
     }
 }
