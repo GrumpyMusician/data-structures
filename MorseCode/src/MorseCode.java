@@ -88,13 +88,11 @@ public class MorseCode
         TreeNode currentNode = decodeTree;
         for (int i = 0; i < code.length(); i++){
             if (code.charAt(i) == DOT){
-                System.out.print("Left ");
                 if (currentNode.getLeft() == null)
                     currentNode.setLeft(new TreeNode(null));
                 currentNode = currentNode.getLeft();
             }
             else if (code.charAt(i) == DASH){
-                System.out.print("Right ");
                 if (currentNode.getRight() == null)
                     currentNode.setRight(new TreeNode(null));
                 currentNode = currentNode.getRight();
@@ -102,7 +100,6 @@ public class MorseCode
         }
 
         currentNode.setValue(letter);
-        System.out.println("--> " + letter);
 
     }
 
@@ -122,8 +119,6 @@ public class MorseCode
                 char marconichar = text.charAt(i);
                 marconimsg += findpath(decodeTree.getLeft(), marconichar, ".");
                 marconimsg += findpath(decodeTree.getRight(), marconichar, "-");
-
-                System.out.println(marconimsg);
             }
             else {
                 morse.append(marconimsg + " ");
@@ -132,8 +127,6 @@ public class MorseCode
         }
 
         morse.append(marconimsg);
-
-        System.out.println(morse.toString());
         return morse.toString();
     }
 
@@ -143,9 +136,6 @@ public class MorseCode
         TreeNode rightNode = node.getRight();
 
         findchar = Character.toUpperCase(findchar);
-
-        System.out.println(findchar + ", " + node.getValue() + ": " + path);
-
         String message = "";
 
         if (node.getValue() != null && node.getValue().equals((Object) findchar))
@@ -216,18 +206,15 @@ class BTreePrinter {
         List<TreeNode> newNodes = new ArrayList<TreeNode>();
         for (TreeNode node : nodes) {
             if (node != null) {
-                System.out.print(node.getValue());
                 newNodes.add(node.getLeft());
                 newNodes.add(node.getRight());
             } else {
                 newNodes.add(null);
                 newNodes.add(null);
-                System.out.print(" ");
             }
 
             BTreePrinter.printWhitespaces(betweenSpaces);
         }
-        System.out.println("");
 
         for (int i = 1; i <= endgeLines; i++) {
             for (int j = 0; j < nodes.size(); j++) {
